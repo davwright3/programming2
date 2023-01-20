@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+#include <random>
+#include <vector>
+
+
+struct Object
+{
+	std::string name;
+	int strength{ 0 };
+	int health{ 0 };
+};
+
+
+int main() {
+
+	Object player;
+	player.name = "Ronald McDonald";
+
+	std::random_device seed;
+	std::default_random_engine e(seed());
+
+	std::normal_distribution randomHealth(30.0, 5.0);
+
+	std::normal_distribution randomStrength(5.0, 1.0);
+
+	while (player.health < 1) 
+	{
+		
+		player.health = randomHealth(e);
+	};
+
+	while (player.strength < 1)
+	{
+		
+		player.strength = randomStrength(e);
+	};
+
+
+	std::vector<Object> monsters;
+
+	std::uniform_int_distribution randomMonsters(1, 3);
+	int numMonsters = randomMonsters(e);
+
+	for (int i{ 0 }; i < numMonsters; i++) {
+		monsters.push_back(Object());
+
+		monsters.at(i).name = "monster" + std::to_string(i+1);
+
+		while (monsters.at(i).health < 1) 
+		{
+			monsters.at(i).health = randomHealth(e);
+		}
+
+		while (monsters.at(i).strength < 1) 
+		{
+			monsters.at(i).strength = randomStrength(e);
+		}
+	
+	}
+
+	bool playerDead = false;
+	bool monstersDead = false;
+
+	while (!playerDead && !monstersDead) {
+	
+		std::cout << "Player:" << player.name << '\n'
+			<< " " "Health:" << player.health;
+
+
+	}
+
+
+}
